@@ -51,6 +51,11 @@ def div_print(text, width ='auto',  bgcolor=bgcolor, text_color=text_color,
     if width != 'auto':
         if width[-1] != '%':
             width = str(width) + "px"
+        else:
+            width = str(width)
+    else:
+        font_calc = {6: 2.75, 5: 2.5, 4: 2.5, 3: 3, 2: 4}
+        width = str(len(text) * fontsize * font_calc[fontsize])
         
     return display(html_print("<span style = 'display: block; width: {}; \
                                 line-height: 2; background: {};\
