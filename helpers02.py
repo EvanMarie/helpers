@@ -8,8 +8,6 @@ pd.options.display.float_format = '{:,.2f}'.format
 bgcolor ='#333333'; text_color = 'white'
 innerbackcolor = "#222222"; outerbackcolor = "#33333"; fontcolor = "white"
 
-# TESTING THIS THANG
-
 # FUNCTIONS: d, p, sp, table_of_contents, display_me, sample_df, center_df, center_series
 #	     list_to_table, div_print, overview, missing_values, fancy_plot
 
