@@ -44,7 +44,7 @@ def pretty(input, fontsize=3, bgcolor = '#444444',
                                                                    textcolor, input)))
 
 
-def div_print(text, width='auto', bgcolor='#333333', text_color='white',
+def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
               fontsize=2
               ):
     from IPython.display import HTML as html_print
