@@ -8,7 +8,7 @@ pd.options.display.float_format = '{:,.2f}'.format
 bgcolor ='#333333'; text_color = 'white'
 innerbackcolor = "#222222"; outerbackcolor = "#33333"; fontcolor = "white"
 
-# FUNCTIONS: d, p, sp, table_of_contents, display_me, sample_df, center
+# FUNCTIONS: d, p, sp, table_of_contents, display_me, sample_df, see,
 #	     list_to_table, div_print, overview, missing_values, fancy_plot
 
 
@@ -212,7 +212,7 @@ def sample_df(data, num, title, width="auto",
 
 # .......................CENTER....................................... #
     
-def center(data, title = None, width = "auto",
+def see(data, title = None, width = "auto",
              bgcolor=bgcolor, text_color=text_color):
     pd.options.display.float_format = '{:,.2f}'.format    
 
