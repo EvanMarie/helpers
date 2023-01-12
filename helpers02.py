@@ -8,7 +8,7 @@ pd.options.display.float_format = '{:,.2f}'.format
 bgcolor ='#333333'; text_color = 'white'
 innerbackcolor = "#222222"; outerbackcolor = "#33333"; fontcolor = "white"
 
-# FUNCTIONS: d, p, sp, table_of_contents, display_me, sample_df, center_df, center_series
+# FUNCTIONS: d, p, sp, table_of_contents, display_me, sample_df, center
 #	     list_to_table, div_print, overview, missing_values, fancy_plot
 
 
@@ -218,14 +218,14 @@ def center(data, title = None, width = "auto",
 
     if title != None:    
         div_print(f"{title}", fontsize = 4, width=width,
-                 bgcolor=bgcolor, text_color=text_color)
+                 bgcolor=bgcolor, text_color=text_color); sp()
                  
     if isinstance(data, pd.core.frame.DataFrame):
-        display(HTML("<center>" + data.to_html()))
+        display(HTML("<center>" + data.to_html())); sp()
     elif isinstance(data, pd.core.series.Series):
-        display(HTML("<center>" + data.to_frame().to_html()))
+        display(HTML("<center>" + data.to_frame().to_html())); sp()
     else:
-        div_print("Data is not the correct type.", fontsize = 4, width="30%")
+        div_print("Data is not the correct type.", fontsize = 4, width="30%"); sp()
 
 # .......................LIST_TO_TABLE....................................... #
     
