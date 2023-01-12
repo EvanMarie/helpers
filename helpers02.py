@@ -218,7 +218,7 @@ def center(data, title = None, width = "auto",
 
     if title != None:    
         div_print(f"{title}", fontsize = 4, width=width,
-                 bgcolor=bgcolor, text_color=text_color); sp()
+                 bgcolor=bgcolor, text_color=text_color)
                  
     if isinstance(data, pd.core.frame.DataFrame):
         display(HTML("<center>" + data.to_html())); sp()
