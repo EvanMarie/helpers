@@ -227,6 +227,49 @@ def see(data, title = None, width = "auto",
     else:
         div_print("Data is not the correct type.", fontsize = 4, width="30%"); sp()
 
+# .......................SEEHORZ....................................... #
+
+def seehorz(data_list, title_list):
+    if len(data_list) == 2:
+        styler01 = data_list[0].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[0])
+        styler02 = data_list[1].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[1])
+        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" + styler02._repr_html_(), raw=True)
+
+    elif len(data_list) == 3:
+        styler01 = data_list[0].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[0])
+        styler02 = data_list[1].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[1])
+        styler03 = data_list[2].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[2])
+        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" \
+                     + styler02._repr_html_() + "&nbsp;&nbsp;" \
+                     + styler03._repr_html_(), raw=True)
+    elif len(data_list) == 4:
+        styler01 = data_list[0].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[0])
+        styler02 = data_list[1].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[1])
+        styler03 = data_list[2].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[2])
+        styler04 = data_list[3].style \
+            .set_table_attributes("style='display:inline'") \
+            .set_caption(title_list[3])
+        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" + \
+                     styler02._repr_html_() + "&nbsp;&nbsp;" + \
+                     styler03._repr_html_() + "&nbsp;&nbsp;" + \
+                     styler04._repr_html_(), raw=True)
+
 # .......................LIST_TO_TABLE....................................... #
     
 def list_to_table(display_list, num_cols, title, width = "auto",
