@@ -48,7 +48,6 @@ def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
               fontsize=2
               ):
 
-    print("HI! ")
     from IPython.display import HTML as html_print
 
     if width == 'auto':
@@ -62,7 +61,7 @@ def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
             width = width
         elif width[-1] != '%':
             width = width + "px"
-    print(width)
+
     return display(html_print("<span style = 'display: block; width: {}; \
 						line-height: 2; background: {};\
 						margin-left: auto; margin-right: auto;\
@@ -251,23 +250,6 @@ def list_to_table(display_list, num_cols, title, width = "auto",
         current += '</tr><tr>'
     current += '</tr></table></center>'
     display(HTML(current))
-
-# .............................DIV_PRINT.......................................... #
-
-def div_print(text, width='auto',  bgcolor=bgcolor, text_color=text_color,
-              fontsize=2):
-    from IPython.display import HTML as html_print
-        
-    return display(html_print("<span style = 'display: block; width: {}; \
-                                line-height: 2; background: {};\
-                                margin-left: auto; margin-right: auto;\
-                                border: 1px solid text_color;\
-                                border-radius: 3px; text-align: center;\
-                                padding: 3px 8px 3px 8px;'>\
-                                <b><font size={}><text style=color:{}>{}\
-                                </text></font></b></style>".format(width, bgcolor, 
-                                                                   fontsize,
-                                                                   text_color, text)))
 
 
 # .......................OVERVIEW....................................... #
