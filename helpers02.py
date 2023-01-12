@@ -47,6 +47,8 @@ def pretty(input, fontsize=3, bgcolor = '#444444',
 def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
               fontsize=2
               ):
+
+    print("HI! ")
     from IPython.display import HTML as html_print
 
     if width == 'auto':
@@ -60,7 +62,7 @@ def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
             width = width
         elif width[-1] != '%':
             width = width + "px"
-
+    print(width)
     return display(html_print("<span style = 'display: block; width: {}; \
 						line-height: 2; background: {};\
 						margin-left: auto; margin-right: auto;\
