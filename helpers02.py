@@ -222,13 +222,13 @@ def sample_df(data, num, title, width="auto",
 
 # .......................CENTER....................................... #
 
-def see(data, title=None, width="auto",
+def see(data, title=None, width="auto", fontsize=4,
         bgcolor=bgcolor, text_color=text_color
         ):
     pd.options.display.float_format = '{:,.2f}'.format
 
     if title != None:
-        div_print(f"{title}", fontsize=4, width=width,
+        div_print(f"{title}", fontsize=fontsize, width=width,
                   bgcolor=bgcolor, text_color=text_color)
 
     if isinstance(data, pd.core.frame.DataFrame):
@@ -241,49 +241,86 @@ def see(data, title=None, width="auto",
         div_print("Data is not the correct type.", fontsize=4, width="30%");
         sp()
 
+# .......................FORCE_DF....................................... #
+def force_df(data):
+    if isinstance(data, pd.core.series.Series):
+        return data.to_frame()
+    elif isinstance(data, pd.core.frame.DataFrame):
+        return data
+    else:
+        div_print("Data is not the correct type.", fontsize=4, width="30%");
 
 # .......................SEEHORZ....................................... #
 
-def seehorz(data_list, title_list):
+def seehorz(data_list, title_list, fontsize='15px', precision=2):
+    from IPython.display import display_html
+
+    caption_style = [{
+        'selector': 'caption',
+        'props': [
+            ('background', '#333333'),
+            ('border-radius', '3px'),
+            ('padding', '5px'),
+            ('color', 'white'),
+            ('font-size', fontsize),
+            ('font-weight', 'bold')]}]
+
     if len(data_list) == 2:
-        styler01 = data_list[0].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[0])
-        styler02 = data_list[1].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[1])
-        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" + styler02._repr_html_(), raw=True)
+        styler01 = force_df(data_list[0]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[0]) \
+            .set_table_styles(caption_style).format(precision=precision)
+
+        styler02 = force_df(data_list[1]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[1]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        display_html('<center>' + styler01._repr_html_() + "&nbsp;&nbsp;&nbsp;" + styler02._repr_html_(), raw=True)
+        sp();
+        sp()
 
     elif len(data_list) == 3:
-        styler01 = data_list[0].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[0])
-        styler02 = data_list[1].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[1])
-        styler03 = data_list[2].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[2])
-        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" \
-                     + styler02._repr_html_() + "&nbsp;&nbsp;" \
+        styler01 = force_df(data_list[0]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[0]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        styler02 = force_df(data_list[1]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[1]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        styler03 = force_df(data_list[2]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[2]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        display_html('<center>' + styler01._repr_html_() + "&nbsp;&nbsp;&nbsp;" \
+                     + styler02._repr_html_() + "&nbsp;&nbsp;&nbsp;" \
                      + styler03._repr_html_(), raw=True)
+        sp();
+        sp()
+
     elif len(data_list) == 4:
-        styler01 = data_list[0].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[0])
-        styler02 = data_list[1].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[1])
-        styler03 = data_list[2].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[2])
-        styler04 = data_list[3].style \
-            .set_table_attributes("style='display:inline'") \
-            .set_caption(title_list[3])
-        display_html(styler01._repr_html_() + "&nbsp;&nbsp;" + \
-                     styler02._repr_html_() + "&nbsp;&nbsp;" + \
-                     styler03._repr_html_() + "&nbsp;&nbsp;" + \
+        styler01 = force_df(data_list[0]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[0]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        styler02 = force_df(data_list[1]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[1]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        styler03 = force_df(data_list[2]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[2]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        styler04 = force_df(data_list[3]).style \
+            .set_table_attributes("style='display:inline-grid'") \
+            .set_caption(title_list[3]) \
+            .set_table_styles(caption_style).format(precision=precision)
+        display_html('<center>' + styler01._repr_html_() + "&nbsp;&nbsp;&nbsp;" + \
+                     styler02._repr_html_() + "&nbsp;&nbsp;&nbsp;" + \
+                     styler03._repr_html_() + "&nbsp;&nbsp;&nbsp;" + \
                      styler04._repr_html_(), raw=True)
+        sp();
+        sp()
 
 
 # .......................LIST_TO_TABLE....................................... #
