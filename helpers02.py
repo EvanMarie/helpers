@@ -9,7 +9,7 @@ pd.options.display.float_format = '{:,.2f}'.format
 bgcolor = '#333333';
 text_color = 'white'
 innerbackcolor = "#222222";
-outerbackcolor = "#33333";
+outerbackcolor = "#333333";
 fontcolor = "white"
 
 
@@ -51,7 +51,7 @@ def pretty(input, fontsize=3, bgcolor='#444444',
                                 <b><font size={}><text style=color:{}>{}\
                                 </text></font></b></style>".format(bgcolor, width,
                                                                    fontsize,
-                                                                   textcolor, input)))
+                                                                   textcolor, input))); sp()
 
 
 def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
@@ -232,14 +232,14 @@ def see(data, title=None, width="auto", fontsize=4,
                   bgcolor=bgcolor, text_color=text_color)
 
     if isinstance(data, pd.core.frame.DataFrame):
-        display(HTML("<center>" + data.to_html()));
-        sp()
+        display(HTML("<center>" + data.to_html())); sp()
     elif isinstance(data, pd.core.series.Series):
-        display(HTML("<center>" + data.to_frame().to_html()));
-        sp()
+        display(HTML("<center>" + data.to_frame().to_html())); sp()
     else:
-        div_print("Data is not the correct type.", fontsize=4, width="30%");
-        sp()
+        try:
+            display(HTML("<center>" + data.to_frame().to_html())); sp()
+        except:
+            pretty(data, title); sp()
 
 # .......................FORCE_DF....................................... #
 def force_df(data):
@@ -248,7 +248,10 @@ def force_df(data):
     elif isinstance(data, pd.core.frame.DataFrame):
         return data
     else:
-        div_print("Data is not the correct type.", fontsize=4, width="30%");
+        try:
+            display(HTML("<center>" + data.to_frame().to_html())); sp()
+        except:
+            return d(data); sp()
 
 # .......................SEEHORZ....................................... #
 
