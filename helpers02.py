@@ -28,8 +28,8 @@ def p(x): print(x); sp()
 def d(x): display(x); sp()
 
 
-def pretty(input, fontsize=3, bgcolor='#444444',
-           textcolor="white", width=None, label=None
+def pretty(input, label=None, fontsize=3, bgcolor='#444444',
+           textcolor="white", width=None
            ):
     from IPython.display import HTML
     input = str(input)
@@ -51,7 +51,7 @@ def pretty(input, fontsize=3, bgcolor='#444444',
                                 <b><font size={}><text style=color:{}>{}\
                                 </text></font></b></style>".format(bgcolor, width,
                                                                    fontsize,
-                                                                   textcolor, input))); sp()
+                                                                   textcolor, input)))
 
 
 def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
@@ -220,7 +220,7 @@ def sample_df(data, num, title, width="auto",
     display(HTML(df))
 
 
-# .......................CENTER....................................... #
+# .......................SEE....................................... #
 
 def see(data, title=None, width="auto", fontsize=4,
         bgcolor=bgcolor, text_color=text_color
@@ -232,14 +232,19 @@ def see(data, title=None, width="auto", fontsize=4,
                   bgcolor=bgcolor, text_color=text_color)
 
     if isinstance(data, pd.core.frame.DataFrame):
-        display(HTML("<center>" + data.to_html())); sp()
+        display(HTML("<center>" + data.to_html()));
+        sp()
     elif isinstance(data, pd.core.series.Series):
-        display(HTML("<center>" + data.to_frame().to_html())); sp()
+        display(HTML("<center>" + data.to_frame().to_html()));
+        sp()
     else:
         try:
-            display(HTML("<center>" + data.to_frame().to_html())); sp()
+            display(HTML("<center>" + data.to_frame().to_html()));
+            sp()
         except:
-            pretty(data, title); sp()
+            pretty(data, title);
+            sp()
+
 
 # .......................FORCE_DF....................................... #
 def force_df(data):
@@ -249,9 +254,10 @@ def force_df(data):
         return data
     else:
         try:
-            display(HTML("<center>" + data.to_frame().to_html())); sp()
+            return pd.Series(data).to_frame()
         except:
-            return d(data); sp()
+            return div_print("The data cannot be displayed.")
+
 
 # .......................SEEHORZ....................................... #
 
