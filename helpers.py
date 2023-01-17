@@ -129,7 +129,7 @@ def time_stamp_converter(df):
         return timestamp_cols
     timestamp_cols = find_timestamp(df)
     for col in timestamp_cols:
-        df[col] = df[col].strftime('%Y-%m-%d')
+        df[col] = df[col].dt.strftime('%Y-%m-%d')
     return df
 
 # ......................TABLE_OF_CONTENTS....................................... #
