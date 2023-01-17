@@ -34,17 +34,10 @@ def pd_np_mpl_import():
     reload = importlib.reload
 
 
-def reload_import():
-    global reload
-    importlib = __import__('importlib', globals(), locals())
-    reload = importlib.reload
-
-
 def url_import():
     global urlretrieve
     urllib = __import__('urllib', globals(), locals())
     urlretrieve = urllib.request.urlretrieve
-
 
 def yf_import():
     global yf
@@ -53,7 +46,6 @@ def yf_import():
 
 def import_all():
     pd_np_mpl_import()
-    reload_import()
     url_import()
     yf_import()
 
@@ -124,6 +116,21 @@ def div_print(text, width='auto', bgcolor=bgcolor, text_color=text_color,
                                                            fontsize,
                                                            text_color, text)))
 
+# .......................Time Stamp Converter....................................... #
+# Write a function to convert any column in a df that is a timestamp
+# to date, hour, and min only
+# Find columns that dtype is timestamp
+def time_stamp_converter(df):
+    def find_timestamp(df):
+        timestamp_cols = []
+        for col in df.columns:
+            if df[col].dtype.name.startswith('datetime64'):
+                timestamp_cols.append(col)
+        return timestamp_cols
+    timestamp_cols = find_timestamp(df)
+    for col in timestamp_cols:
+        df[col] = df[col].strftime('%Y-%m-%d')
+    return df
 
 # ......................TABLE_OF_CONTENTS....................................... #
 
@@ -221,13 +228,19 @@ def link_menu(links_list, title=None, links_per_row=5):
 
 
 # .......................DISPLAY_ME........................................ #
-
 def head_tail_vert(df, num, title, bgcolor=bgcolor,
-                   text_color=text_color,  fontsize=4):
-
+                    text_color=text_color, fontsize=4,
+                    intraday=False):
     from IPython.core.display import HTML
+
     if type(df) != pd.core.frame.DataFrame:
-        df = df.to_frame()
+        df = df.copy().to_frame()
+
+    if not intraday:
+        df = time_stamp_converter(df.copy())
+        if df.index.dtype.name.startswith('datetime64'):
+            df.index = df.index.strftime('%Y-%m-%d')
+            # df.index = df.index.date
 
     head_data = "<center>" + df.head(num).to_html()
     tail_data = "<center>" + df.tail(num).to_html()
@@ -246,6 +259,12 @@ def head_tail_horz(df, num, title, bgcolor=bgcolor,
                    text_color=text_color, precision=2,
                    intraday=False, title_fontsize=4,
                    table_fontsize="12px"):
+
+    if not intraday:
+        df = time_stamp_converter(df.copy())
+        if df.index.dtype.name.startswith('datetime64'):
+            df.index = df.index.strftime('%Y-%m-%d')
+            # df.index = df.index.date
 
     div_print(f'{title}', fontsize=title_fontsize,
               bgcolor=bgcolor, text_color=text_color)
@@ -278,8 +297,9 @@ def sample_df(data, num, title, width="auto",
 # .......................SEE....................................... #
 
 def see(data, title=None, width="auto", fontsize=4,
-        bgcolor=bgcolor, text_color=text_color
-        ):
+        bgcolor=bgcolor, text_color=text_color,
+        intraday=False):
+
     pd.options.display.float_format = '{:,.2f}'.format
 
     if title != None:
@@ -287,9 +307,18 @@ def see(data, title=None, width="auto", fontsize=4,
                   bgcolor=bgcolor, text_color=text_color)
 
     if isinstance(data, pd.core.frame.DataFrame):
+        if not intraday:
+            data = time_stamp_converter(data.copy())
+            if data.index.dtype.name.startswith('datetime64'):
+                data.index = data.index.strftime('%Y-%m-%d')
+                # data.index = data.index.date
+
         display(HTML("<center>" + data.to_html()));
         sp()
     elif isinstance(data, pd.core.series.Series):
+        if data.index.dtype.name.startswith('datetime64'):
+            data.index = data.index.strftime('%Y-%m-%d')
+            # data.index = data.index.date
         display(HTML("<center>" + data.to_frame().to_html()));
         sp()
     else:
@@ -305,7 +334,8 @@ def see(data, title=None, width="auto", fontsize=4,
 def date_only(data, intraday=False):
     if intraday == False:
         if data.index.dtype == 'datetime64[ns]':
-            data.index = data.index.date
+            data.index = data.index.strftime('%Y-%m-%d')
+            # data.index = data.index.date
             return data
         else:
             return data
@@ -519,12 +549,19 @@ def mini_plot(df, title, ylabel=None, xlabel=None, cmap='cool', kind='line',
 
 def plot_by_df(df, sort_param, title, fontsize = 4, num_records=12,
                ylabel=None, xlabel=None, cmap='cool', kind='line',
-               label_rot=None, logy=False, legend_loc=2, precision=2, thousands=","):
+               label_rot=None, logy=False, legend_loc=2, precision=2,
+               thousands=",", intraday=False):
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
     import ipywidgets as widgets
     from ipywidgets import GridspecLayout
+
+    if not intraday:
+        df = time_stamp_converter(df.copy())
+        if df.index.dtype.name.startswith('datetime64'):
+            df.index = df.index.strftime('%Y-%m-%d')
+            # df.index = df.index.date
 
     out_box1 = widgets.Output(layout={"border": "1px solid black"})
     out_box2 = widgets.Output(layout={"border": "1px solid black"})
@@ -665,4 +702,8 @@ def seehorz(data_list, title_list, fontsize='15px', precision=2,
         sp()
 
 
+# set the dt.strftime format for the index to be just the date
+def set_date_format(df):
+    df.index = df.index.strftime('%Y-%m-%d')
+    return df
 

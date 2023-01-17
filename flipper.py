@@ -4,6 +4,9 @@ import pandas as pd
 # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html
 # https://tomaugspurger.github.io/method-chaining
 
+# Select the rows from a dataframe where the Symbol contains "^"
+def select_symbols(df):
+    return df[df.Symbol.str.contains('\^')]
 
 
 # CMAPS THAT WORK with my dark color scheme
@@ -56,15 +59,14 @@ import pandas as pd
 # 'twilight_shifted_r', 'viridis', 'viridis_r', 'winter', \
 # 'winter_r'
 
-
-
-def date_only(df):
-    if df.index.dtype == 'datetime64[ns]':
+# if index dtype starts with datetime64, convert to dt.date
+def convert_date(df):
+    if df.index.dtype.name.startswith('datetime64'):
         df.index = df.index.date
-        return df
-    else:
-        return df
 
 
-# Create a pandas series of [1,2 3, 4] with a datetime index
-testseries = pd.Series([1,2,3,4], index=pd.date_range('2019-01-01', periods=4))
+
+
+
+
+
